@@ -25,7 +25,8 @@ assetfinder -subs-only $DOMAIN |httprobe |sort -u|anew $DIR/subdomains.txt
 # echo "Total subs found on $1 $(cat subdomains_$d.txt|wc -l)"
 echo " "
 echo "------------------------------------------------------------------------------------"
-echo "subdomain discovery finished starting js file extraction process might take a while"
-cat $DIR/subdomains.txt| gauplus -b ttf,woff,svg,png,jpg  -random-agent |sort -u | grep '\.js'|anew $DIR/jsurls.txt
-cat $DIR/subdomains.txt| waybackurls|sort -u| grep '\.js' | anew $DIR/jsurls.txt
+echo "subdomain discovery finished starting url extraction process. might take a while :)"
+cat $DIR/subdomains.txt| gauplus -b ttf,woff,svg,png,jpg  -random-agent |deduplicate|sort -u | anew $DIR/urls.txt
+cat $DIR/subdomains.txt| waybackurls|deduplicate |sort -u| anew $DIR/urls.txt
+echo " "
 echo "extraction process done and saved in $DIR"
